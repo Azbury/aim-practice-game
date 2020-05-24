@@ -22,4 +22,10 @@ function newUser(userDate) {
         },
         body: JSON.stringify(formData)
     }
+
+    fetch(USERS_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(user) {
+        let newUser = document.createElement('h2')
+        newUser.innerHTML = user.username
+        document.getElementById("username").append(newUser)
+    })
 }
