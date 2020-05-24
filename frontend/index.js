@@ -3,7 +3,7 @@ const USERS_URL = `${BASE_URL}/users`
 
 document.addEventListener("DOMContentLoaded", () => {
     const userFormContainer = document.querySelector(".container")
-    userFormContainer.addEventListener('submit', e => {
+    document.querySelector(".create-user-form").addEventListener('submit', e => {
         e.preventDefault()
         newUser(e.target)
     })
@@ -27,5 +27,7 @@ function newUser(userDate) {
         let newUser = document.createElement('h2')
         newUser.innerHTML = user.username
         document.getElementById("username").append(newUser)
-    })
+    }).catch(function(error) {
+        document.body.innerHTML = error.message
+    });
 }

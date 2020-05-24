@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
     def create
-        respond_with User.create(username: params[:username])
+        render json: User.create(username: params[:username]), status: :created
     end
 
     private
