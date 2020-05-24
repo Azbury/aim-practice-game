@@ -3,7 +3,7 @@ const USERS_URL = `${BASE_URL}/users`
 
 document.addEventListener("DOMContentLoaded", () => {
     const userFormContainer = document.querySelector(".container")
-    document.querySelector(".create-user-form").addEventListener('submit', e => {
+    userFormContainer.addEventListener('submit', e => {
         e.preventDefault()
         newUser(e.target)
     })
