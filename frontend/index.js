@@ -1,8 +1,8 @@
 const BASE_URL = "http://localhost:3000"
 const USERS_URL = `${BASE_URL}/users`
+const userFormContainer = document.querySelector(".container")
 
 document.addEventListener("DOMContentLoaded", () => {
-    const userFormContainer = document.querySelector(".container")
     userFormContainer.addEventListener('submit', function(e) {
         e.preventDefault()
         newUser(e.target)
@@ -24,6 +24,7 @@ function newUser(userDate) {
     }
 
     fetch(USERS_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(user) {
+        userFormContainer.style.display = "none"
         let newUser = document.createElement('h2')
         newUser.innerHTML = user.username
         document.getElementById("username").append(newUser)
