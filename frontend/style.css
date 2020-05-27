@@ -9,3 +9,9 @@ main {
 header {
     text-align: center
 }
+
+canvas { 
+    background: #eee;
+    display: block;
+    margin: 0 auto;
+}

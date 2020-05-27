@@ -37,7 +37,14 @@ function newUser(userDate) {
         newUser.setAttribute('id', 'user')
         newUser.innerHTML = `Username: ${user.username}`
         document.getElementById("username").appendChild(newUser)
+        getScores(user.id)
     }).catch(function(error) {
         document.body.innerHTML = error.message
     });
+}
+
+function getScores(userID) {
+    fetch(`${USERS_URL}/${userID}`).then(function(reponse) {return reponse.json()}).then(function(user) {
+        
+    })
 }
