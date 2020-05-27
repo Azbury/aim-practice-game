@@ -26,7 +26,7 @@ function newUser(userDate) {
     fetch(USERS_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(user) {
         userFormContainer.style.display = "none"
         let newUser = document.createElement('h2')
-        newUser.innerHTML = user.username
+        newUser.innerHTML = `Username: ${user.username}`
         document.getElementById("username").append(newUser)
     }).catch(function(error) {
         document.body.innerHTML = error.message
