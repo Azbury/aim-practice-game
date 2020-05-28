@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     userFormContainer.addEventListener('submit', function(e) {
         e.preventDefault()
         newUser(e.target)
-        addCreeper()
+        setInterval(addCreeper(), 3)
     })
     newPlayer.addEventListener('click', function(e) {
         e.preventDefault()
@@ -56,6 +56,10 @@ function addCreeper() {
     let creeperImg = new Image()
     creeperImg.src = creeper
     creeperImg.onload = function () {
-        context.drawImage(creeperImg, 0, 0, 50, 50)
+        context.drawImage(creeperImg, getRandomArbitrary(0, 480), getRandomArbitrary(0, 480), 50, 50)
     }
+}
+
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
 }
