@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
     userFormContainer.addEventListener('submit', function(e) {
         e.preventDefault()
         newUser(e.target)
-        setInterval(addCreeper(), 3)
+        setInterval(addCreeper, 3000)
     })
     newPlayer.addEventListener('click', function(e) {
         e.preventDefault()
