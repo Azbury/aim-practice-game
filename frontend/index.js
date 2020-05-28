@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", () => {
     userFormContainer.addEventListener('submit', function(e) {
         e.preventDefault()
         newUser(e.target)
+        addCreeper()
     })
     newPlayer.addEventListener('click', function(e) {
         e.preventDefault()
         userFormContainer.style.display = "block"
         newPlayer.style.display = "none"
         document.getElementById("user").remove()
-        addCreeper()
     })
 })
 
@@ -52,7 +52,10 @@ function getScores(userID) {
 }
 
 function addCreeper() {
-    let creeperImg = document.createElement('img')
+    let context = myCanvas.getContext('2d')
+    let creeperImg = new Image()
     creeperImg.src = creeper
-    myCanvas.drawImage(creeperImg, 100, 100, 50, 50)
+    creeperImg.onload = function () {
+        context.drawImage(creeperImg, 0, 0, 50, 50)
+    }
 }
