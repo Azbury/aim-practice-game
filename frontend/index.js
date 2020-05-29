@@ -3,7 +3,7 @@ const USERS_URL = `${BASE_URL}/users`
 const userFormContainer = document.querySelector(".container")
 const newPlayer = document.getElementById("new-player")
 const creeper = "http://www.pngmart.com/files/7/Minecraft-PNG-Clipart.png"
-const myCanvas = document.getElementById("canvas")
+const gameBoard = document.getElementById("game-board")
 
 document.addEventListener("DOMContentLoaded", () => {
     userFormContainer.addEventListener('submit', function(e) {
@@ -52,12 +52,10 @@ function getScores(userID) {
 }
 
 function addCreeper() {
-    let context = myCanvas.getContext('2d')
-    let creeperImg = new Image()
-    creeperImg.src = creeper
-    creeperImg.onload = function () {
-        context.drawImage(creeperImg, getRandomArbitrary(0, 480), getRandomArbitrary(0, 480), 50, 50)
-    }
+    let newCreeper = document.createElement('img')
+    newCreeper.src = creeper
+    newCreeper.style = "width:50px;height:50px"
+    gameBoard.appendChild(newCreeper)
 }
 
 function getRandomArbitrary(min, max) {
