@@ -39,6 +39,9 @@ function newUser(userDate) {
         let newUser = document.createElement('h2')
         newUser.setAttribute('id', 'user')
         newUser.innerHTML = `Username: ${user.username}`
+        let newScore = document.createElement('h3')
+        newScore.innerHTML = "Score: 0"
+        document.getElementById("scores").appendChild(newScore)
         document.getElementById("username").appendChild(newUser)
     }).catch(function(error) {
         document.body.innerHTML = error.message
@@ -58,6 +61,9 @@ function addCreeper() {
     newCreeper.style.position = "absolute"
     newCreeper.style.top = `${getRandomArbitrary(0,480)}px`
     newCreeper.style.left = `${getRandomArbitrary(0,480)}px`
+    newCreeper.addEventListener('click', function(e) {
+        e.target.remove()
+    })
     gameBoard.appendChild(newCreeper)
 }
 
