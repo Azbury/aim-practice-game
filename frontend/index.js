@@ -55,6 +55,9 @@ function addCreeper() {
     let newCreeper = document.createElement('img')
     newCreeper.src = creeper
     newCreeper.style = "width:50px;height:50px"
+    newCreeper.style.position = "absolute"
+    newCreeper.style.top = `${getRandomArbitrary(0,480)}px`
+    newCreeper.style.left = `${getRandomArbitrary(0,480)}px`
     gameBoard.appendChild(newCreeper)
 }
 
