@@ -4,12 +4,19 @@ const userFormContainer = document.querySelector(".container")
 const newPlayer = document.getElementById("new-player")
 const creeper = "http://www.pngmart.com/files/7/Minecraft-PNG-Clipart.png"
 const gameBoard = document.getElementById("game-board")
+let intervalCounter = 0
 
 document.addEventListener("DOMContentLoaded", () => {
     userFormContainer.addEventListener('submit', function(e) {
         e.preventDefault()
         newUser(e.target)
-        setInterval(addCreeper, 1000)
+        let interval = setInterval(function() {
+            if (intervalCounter >= 30) {
+                clearInterval(interval)
+            } else {
+                addCreeper()
+            }
+        }, 1000)
     })
     newPlayer.addEventListener('click', function(e) {
         e.preventDefault()
@@ -60,6 +67,7 @@ function addCreeper() {
     if (creeperElement) {
         creeperElement.remove()
     }
+    intervalCounter++
     let newCreeper = document.createElement('img')
     newCreeper.src = creeper
     newCreeper.style = "width:50px;height:50px"
