@@ -56,7 +56,10 @@ function getScores(userID) {
 }
 
 function addCreeper() {
-    
+    const creeperElement = document.getElementById('creeper')
+    if (creeperElement) {
+        creeperElement.remove()
+    }
     let newCreeper = document.createElement('img')
     newCreeper.src = creeper
     newCreeper.style = "width:50px;height:50px"
