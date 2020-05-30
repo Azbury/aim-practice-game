@@ -22,9 +22,13 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     startGame.addEventListener('click', function(e) {
         e.preventDefault()
+        document.getElementById("current-score").innerHTML = "Score: 0"
+        startGame.style.display = "none"
+        intervalCounter = 0
         let interval = setInterval(function() {
             if (intervalCounter >= 30) {
                 clearInterval(interval)
+                startGame.style.display = "block"
             } else {
                 addCreeper()
             }
