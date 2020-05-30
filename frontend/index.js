@@ -4,12 +4,23 @@ const userFormContainer = document.querySelector(".container")
 const newPlayer = document.getElementById("new-player")
 const creeper = "http://www.pngmart.com/files/7/Minecraft-PNG-Clipart.png"
 const gameBoard = document.getElementById("game-board")
+const startGame = document.getElementById("start-game")
 let intervalCounter = 0
 
 document.addEventListener("DOMContentLoaded", () => {
     userFormContainer.addEventListener('submit', function(e) {
         e.preventDefault()
         newUser(e.target)
+    })
+    newPlayer.addEventListener('click', function(e) {
+        e.preventDefault()
+        userFormContainer.style.display = "block"
+        newPlayer.style.display = "none"
+        startGame.style.display = "none"
+        document.getElementById("user").remove()
+    })
+    startGame.addEventListener('click', function(e) {
+        e.preventDefault()
         let interval = setInterval(function() {
             if (intervalCounter >= 30) {
                 clearInterval(interval)
@@ -17,12 +28,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 addCreeper()
             }
         }, 1000)
-    })
-    newPlayer.addEventListener('click', function(e) {
-        e.preventDefault()
-        userFormContainer.style.display = "block"
-        newPlayer.style.display = "none"
-        document.getElementById("user").remove()
     })
 })
 
@@ -43,6 +48,7 @@ function newUser(userDate) {
     fetch(USERS_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(user) {
         userFormContainer.style.display = "none"
         newPlayer.style.display = "block"
+        startGame.style.display = "block"
         let newUser = document.createElement('h2')
         newUser.setAttribute('id', 'user')
         newUser.innerHTML = `Username: ${user.username}`
