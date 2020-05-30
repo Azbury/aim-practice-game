@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", () => {
         userFormContainer.style.display = "block"
         newPlayer.style.display = "none"
         startGame.style.display = "none"
+        document.getElementById("current-score").remove()
         document.getElementById("user").remove()
     })
     startGame.addEventListener('click', function(e) {
