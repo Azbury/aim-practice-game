@@ -36,9 +36,9 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 })
 
-function newUser(userDate) {
+function newUser(userData) {
     let formData = {
-        "username": userDate.username.value
+        "username": userData.username.value
     }
 
     let configObj = {
@@ -94,6 +94,12 @@ function addCreeper() {
         currentScore.innerHTML = scoreArray.join(" ")
     })
     gameBoard.appendChild(newCreeper)
+}
+
+function addNewScore(scoreData) {
+    let formData = {
+
+    }
 }
 
 function getRandomArbitrary(min, max) {
