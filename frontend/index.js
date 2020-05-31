@@ -98,7 +98,17 @@ function addCreeper() {
 
 function addNewScore(scoreData) {
     let formData = {
+        "points": scoreData.points,
+        "user_id": scoreData.user_id
+    }
 
+    let configObj = {
+        method: "Post",
+        headers: {
+            "content-type": "application/json",
+            "accept": "application/json"
+        },
+        body: JSON.stringify(formData)
     }
 }
 
