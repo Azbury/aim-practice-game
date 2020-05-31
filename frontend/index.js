@@ -1,5 +1,6 @@
 const BASE_URL = "http://localhost:3000"
 const USERS_URL = `${BASE_URL}/users`
+const SCORES_URL = `${BASE_URL}/scores`
 const userFormContainer = document.querySelector(".container")
 const newPlayer = document.getElementById("new-player")
 const creeper = "http://www.pngmart.com/files/7/Minecraft-PNG-Clipart.png"
@@ -109,6 +110,10 @@ function addNewScore(scoreData) {
             "accept": "application/json"
         },
         body: JSON.stringify(formData)
+    }
+
+    fetch(SCORES_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(score) {
+
     }
 }
 
