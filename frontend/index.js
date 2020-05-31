@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         newPlayer.style.display = "none"
         startGame.style.display = "none"
         document.getElementById("current-score").remove()
-        document.getElementById("user").remove()
+        document.querySelector(".user").remove()
     })
     startGame.addEventListener('click', function(e) {
         e.preventDefault()
@@ -56,7 +56,7 @@ function newUser(userData) {
         newPlayer.style.display = "block"
         startGame.style.display = "block"
         let newUser = document.createElement('h2')
-        newUser.setAttribute('id', 'user')
+        newUser.setAttribute('class', 'user')
         newUser.innerHTML = `Username: ${user.username}`
         let newScore = document.createElement('h3')
         newScore.innerHTML = "Score: 0"
@@ -97,10 +97,10 @@ function addCreeper() {
     gameBoard.appendChild(newCreeper)
 }
 
-function addNewScore(scoreData) {
+function addNewScore(points, user_id) {
     let formData = {
-        "points": scoreData.points,
-        "user_id": scoreData.user_id
+        "points": points,
+        "user_id": user_id
     }
 
     let configObj = {
@@ -114,7 +114,7 @@ function addNewScore(scoreData) {
 
     fetch(SCORES_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(score) {
 
-    }
+    })
 }
 
 function getRandomArbitrary(min, max) {
