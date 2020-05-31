@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (intervalCounter >= 30) {
                 clearInterval(interval)
                 startGame.style.display = "block"
+                addNewScore(parseInt(document.getElementById('current-score').innerHTML.split(" ")[1]), document.querySelector('.user').id)
             } else {
                 addCreeper()
             }
@@ -57,6 +58,7 @@ function newUser(userData) {
         startGame.style.display = "block"
         let newUser = document.createElement('h2')
         newUser.setAttribute('class', 'user')
+        newUser.setAttribute('id', user.id)
         newUser.innerHTML = `Username: ${user.username}`
         let newScore = document.createElement('h3')
         newScore.innerHTML = "Score: 0"
@@ -113,7 +115,7 @@ function addNewScore(points, user_id) {
     }
 
     fetch(SCORES_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(score) {
-
+        document.getElementById("score-1").innerHTML = `1. ${score.points}`
     })
 }
 
