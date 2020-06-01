@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startGame.style.display = "none"
         document.getElementById("current-score").remove()
         document.querySelector(".user").remove()
+        clearScoreboard()
     })
     startGame.addEventListener('click', function(e) {
         e.preventDefault()
@@ -66,19 +67,24 @@ function newUser(userData) {
         let newScore = document.createElement('h3')
         newScore.innerHTML = "Score: 0"
         newScore.setAttribute('id', 'current-score')
-        document.getElementById("scores").appendChild(newScore)
+        scores.appendChild(newScore)
         document.getElementById("username").appendChild(newUser)
     }).catch(function(error) {
         document.body.innerHTML = error.message
     });
 }
 
+function clearScoreboard() {
+    for (let i = 1; i < 6; i++) {
+        document.getElementById(`score-${i}`).innerHTML = `${i}. `
+    }
+    scores.style.display = "none"
+}
+
 function getScores(userID) {
     fetch(`${USERS_URL}/${userID}`).then(function(reponse) {return reponse.json()}).then(function(user) {
         userPoints = user.scores.map(element => element.points)
-        console.log(userPoints)
         sortedScores = userPoints.sort((a, b) => b - a)
-        console.log(sortedScores)
         for (let i = 1; i < sortedScores.length + 1 && i != 6; i++) {
             console.log(i)
             document.getElementById(`score-${i}`).innerHTML = `${i}. ${sortedScores[i - 1]}`
