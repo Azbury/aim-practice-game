@@ -75,8 +75,14 @@ function newUser(userData) {
 
 function getScores(userID) {
     fetch(`${USERS_URL}/${userID}`).then(function(reponse) {return reponse.json()}).then(function(user) {
-        sortedScores = user.scores.sort((a, b) => b - a)
-        
+        userPoints = user.scores.map(element => element.points)
+        console.log(userPoints)
+        sortedScores = userPoints.sort((a, b) => b - a)
+        console.log(sortedScores)
+        for (let i = 1; i < sortedScores.length + 1 && i != 6; i++) {
+            console.log(i)
+            document.getElementById(`score-${i}`).innerHTML = `${i}. ${sortedScores[i - 1]}`
+        }
     })
 }
 
@@ -119,7 +125,7 @@ function addNewScore(points, user_id) {
     }
 
     fetch(SCORES_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(score) {
-        document.getElementById("score-1").innerHTML = `1. ${score.points}`
+        getScores(score.user_id)
     })
 }
 

@@ -5,7 +5,7 @@ class UserSerializer
 
     def to_serialized_json
         @user.to_json(:include => {
-            :scores => {:only => [:points :id]},
+            :scores => {:only => [:points]},
         }, :except => [:updated_at, :created_at])
     end
 end

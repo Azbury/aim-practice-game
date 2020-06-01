@@ -7,7 +7,8 @@
 }
 
 #scores {
-    display: none
+    display: none;
+    color: red
 }
 
 main {
