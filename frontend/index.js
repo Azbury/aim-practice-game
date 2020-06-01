@@ -75,8 +75,8 @@ function newUser(userData) {
 
 function getScores(userID) {
     fetch(`${USERS_URL}/${userID}`).then(function(reponse) {return reponse.json()}).then(function(user) {
-        let topScores = []
         sortedScores = user.scores.sort((a, b) => b - a)
+        
     })
 }
 
