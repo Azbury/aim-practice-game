@@ -6,11 +6,14 @@ const newPlayer = document.getElementById("new-player")
 const creeper = "http://www.pngmart.com/files/7/Minecraft-PNG-Clipart.png"
 const gameBoard = document.getElementById("game-board")
 const startGame = document.getElementById("start-game")
+const scores = document.getElementById("scores")
 let intervalCounter = 0
+let topScores = []
 
 document.addEventListener("DOMContentLoaded", () => {
     userFormContainer.addEventListener('submit', function(e) {
         e.preventDefault()
+        scores.style.display = "block"
         newUser(e.target)
     })
     newPlayer.addEventListener('click', function(e) {
@@ -72,7 +75,8 @@ function newUser(userData) {
 
 function getScores(userID) {
     fetch(`${USERS_URL}/${userID}`).then(function(reponse) {return reponse.json()}).then(function(user) {
-        
+        let topScores = []
+        sortedScores = user.scores.sort((a, b) => b - a)
     })
 }
 

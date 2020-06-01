@@ -5,6 +5,11 @@
 #start-game {
     display: none
 }
+
+#scores {
+    display: none
+}
+
 main {
     text-align: center
 }
