@@ -13,23 +13,16 @@ let topScores = []
 document.addEventListener("DOMContentLoaded", () => {
     userFormContainer.addEventListener('submit', function(e) {
         e.preventDefault()
-        scores.style.display = "block"
-        newUser(e.target)
+        User.newUser(e.target)
     })
     newPlayer.addEventListener('click', function(e) {
         e.preventDefault()
-        userFormContainer.style.display = "block"
-        newPlayer.style.display = "none"
-        startGame.style.display = "none"
-        document.getElementById("current-score").remove()
-        document.querySelector(".user").remove()
+        User.clearUserInfo()
         Score.clearScoreboard()
     })
     startGame.addEventListener('click', function(e) {
         e.preventDefault()
-        document.getElementById("current-score").innerHTML = "Score: 0"
-        startGame.style.display = "none"
-        intervalCounter = 0
+        Score.resetGame()
         let interval = setInterval(function() {
             if (intervalCounter >= 20) {
                 clearInterval(interval)
@@ -79,38 +72,55 @@ class Score {
             Score.getScores(score.user_id)
         })
     }
+
+    static resetGame() {
+        document.getElementById("current-score").innerHTML = "Score: 0"
+        startGame.style.display = "none"
+        intervalCounter = 0
+    }
 }
 
-function newUser(userData) {
-    let formData = {
-        "username": userData.username.value
+class User {
+    static newUser(userData) {
+        let formData = {
+            "username": userData.username.value
+        }
+        
+        let configObj = {
+            method: "Post",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+            },
+            body: JSON.stringify(formData)
+        }
+        
+        fetch(USERS_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(user) {
+            scores.style.display = "block"
+            userFormContainer.style.display = "none"
+            newPlayer.style.display = "block"
+            startGame.style.display = "block"
+            let newUser = document.createElement('h2')
+            newUser.setAttribute('class', 'user')
+            newUser.setAttribute('id', user.id)
+            newUser.innerHTML = `Username: ${user.username}`
+            let newScore = document.createElement('h3')
+            newScore.innerHTML = "Score: 0"
+            newScore.setAttribute('id', 'current-score')
+            scores.appendChild(newScore)
+            document.getElementById("username").appendChild(newUser)
+        }).catch(function(error) {
+            document.body.innerHTML = error.message
+        });
     }
-    
-    let configObj = {
-        method: "Post",
-        headers: {
-            "content-type": "application/json",
-            "accept": "application/json"
-        },
-        body: JSON.stringify(formData)
+
+    static clearUserInfo() {
+        userFormContainer.style.display = "block"
+        newPlayer.style.display = "none"
+        startGame.style.display = "none"
+        document.getElementById("current-score").remove()
+        document.querySelector(".user").remove()
     }
-    
-    fetch(USERS_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(user) {
-        userFormContainer.style.display = "none"
-        newPlayer.style.display = "block"
-        startGame.style.display = "block"
-        let newUser = document.createElement('h2')
-        newUser.setAttribute('class', 'user')
-        newUser.setAttribute('id', user.id)
-        newUser.innerHTML = `Username: ${user.username}`
-        let newScore = document.createElement('h3')
-        newScore.innerHTML = "Score: 0"
-        newScore.setAttribute('id', 'current-score')
-        scores.appendChild(newScore)
-        document.getElementById("username").appendChild(newUser)
-    }).catch(function(error) {
-        document.body.innerHTML = error.message
-    });
 }
 
 function addCreeper() {
