@@ -8,7 +8,6 @@ const gameBoard = document.getElementById("game-board")
 const startGame = document.getElementById("start-game")
 const scores = document.getElementById("scores")
 let intervalCounter = 0
-let topScores = []
 
 document.addEventListener("DOMContentLoaded", () => {
     userFormContainer.addEventListener('submit', function(e) {
