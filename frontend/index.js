@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
         startGame.style.display = "none"
         document.getElementById("current-score").remove()
         document.querySelector(".user").remove()
-        clearScoreboard()
+        Score.clearScoreboard()
     })
     startGame.addEventListener('click', function(e) {
         e.preventDefault()
@@ -31,10 +31,10 @@ document.addEventListener("DOMContentLoaded", () => {
         startGame.style.display = "none"
         intervalCounter = 0
         let interval = setInterval(function() {
-            if (intervalCounter >= 30) {
+            if (intervalCounter >= 20) {
                 clearInterval(interval)
                 startGame.style.display = "block"
-                addNewScore(parseInt(document.getElementById('current-score').innerHTML.split(" ")[1]), document.querySelector('.user').id)
+                Score.addNewScore(parseInt(document.getElementById('current-score').innerHTML.split(" ")[1]), document.querySelector('.user').id)
             } else {
                 addCreeper()
             }
@@ -42,11 +42,50 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 })
 
+class Score {
+    static clearScoreboard() {
+        for (let i = 1; i < 6; i++) {
+            document.getElementById(`score-${i}`).innerHTML = `${i}. `
+        }
+        scores.style.display = "none"
+    }
+
+    static getScores(userID) {
+        fetch(`${USERS_URL}/${userID}`).then(function(reponse) {return reponse.json()}).then(function(user) {
+            let userPoints = user.scores.map(element => element.points)
+            let sortedScores = userPoints.sort((a, b) => b - a)
+            for (let i = 1; i < sortedScores.length + 1 && i != 6; i++) {
+                document.getElementById(`score-${i}`).innerHTML = `${i}. ${sortedScores[i - 1]}`
+            }
+        })
+    }
+
+    static addNewScore(points, user_id) {
+        let formData = {
+            "points": points,
+            "user_id": user_id
+        }
+    
+        let configObj = {
+            method: "Post",
+            headers: {
+                "content-type": "application/json",
+                "accept": "application/json"
+            },
+            body: JSON.stringify(formData)
+        }
+    
+        fetch(SCORES_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(score) {
+            Score.getScores(score.user_id)
+        })
+    }
+}
+
 function newUser(userData) {
     let formData = {
         "username": userData.username.value
     }
-
+    
     let configObj = {
         method: "Post",
         headers: {
@@ -55,7 +94,7 @@ function newUser(userData) {
         },
         body: JSON.stringify(formData)
     }
-
+    
     fetch(USERS_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(user) {
         userFormContainer.style.display = "none"
         newPlayer.style.display = "block"
@@ -72,24 +111,6 @@ function newUser(userData) {
     }).catch(function(error) {
         document.body.innerHTML = error.message
     });
-}
-
-function clearScoreboard() {
-    for (let i = 1; i < 6; i++) {
-        document.getElementById(`score-${i}`).innerHTML = `${i}. `
-    }
-    scores.style.display = "none"
-}
-
-function getScores(userID) {
-    fetch(`${USERS_URL}/${userID}`).then(function(reponse) {return reponse.json()}).then(function(user) {
-        userPoints = user.scores.map(element => element.points)
-        sortedScores = userPoints.sort((a, b) => b - a)
-        for (let i = 1; i < sortedScores.length + 1 && i != 6; i++) {
-            console.log(i)
-            document.getElementById(`score-${i}`).innerHTML = `${i}. ${sortedScores[i - 1]}`
-        }
-    })
 }
 
 function addCreeper() {
@@ -113,26 +134,6 @@ function addCreeper() {
         currentScore.innerHTML = scoreArray.join(" ")
     })
     gameBoard.appendChild(newCreeper)
-}
-
-function addNewScore(points, user_id) {
-    let formData = {
-        "points": points,
-        "user_id": user_id
-    }
-
-    let configObj = {
-        method: "Post",
-        headers: {
-            "content-type": "application/json",
-            "accept": "application/json"
-        },
-        body: JSON.stringify(formData)
-    }
-
-    fetch(SCORES_URL, configObj).then(function(reponse) {return reponse.json()}).then(function(score) {
-        getScores(score.user_id)
-    })
 }
 
 function getRandomArbitrary(min, max) {
