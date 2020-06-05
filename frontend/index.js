@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 startGame.style.display = "block"
                 Score.addNewScore(parseInt(document.getElementById('current-score').innerHTML.split(" ")[1]), document.querySelector('.user').id)
             } else {
-                addCreeper()
+                Creeper.addCreeper()
             }
         }, 1000)
     })
@@ -122,29 +122,31 @@ class User {
     }
 }
 
-function addCreeper() {
-    const creeperElement = document.getElementById('creeper')
-    if (creeperElement) {
-        creeperElement.remove()
+class Creeper {
+    static addCreeper() {
+        const creeperElement = document.getElementById('creeper')
+        if (creeperElement) {
+            creeperElement.remove()
+        }
+        intervalCounter++
+        let newCreeper = document.createElement('img')
+        newCreeper.src = creeper
+        newCreeper.style = "width:50px;height:50px"
+        newCreeper.style.position = "absolute"
+        newCreeper.style.top = `${Creeper.getRandomPosition(0,480)}px`
+        newCreeper.style.left = `${Creeper.getRandomPosition(0,480)}px`
+        newCreeper.setAttribute('id', 'creeper')
+        newCreeper.addEventListener('click', function(e) {
+            e.target.remove()
+            const currentScore = document.getElementById("current-score")
+            let scoreArray = currentScore.innerHTML.split(" ")
+            scoreArray[1] = parseInt(scoreArray[1]) + 1
+            currentScore.innerHTML = scoreArray.join(" ")
+        })
+        gameBoard.appendChild(newCreeper)
     }
-    intervalCounter++
-    let newCreeper = document.createElement('img')
-    newCreeper.src = creeper
-    newCreeper.style = "width:50px;height:50px"
-    newCreeper.style.position = "absolute"
-    newCreeper.style.top = `${getRandomArbitrary(0,480)}px`
-    newCreeper.style.left = `${getRandomArbitrary(0,480)}px`
-    newCreeper.setAttribute('id', 'creeper')
-    newCreeper.addEventListener('click', function(e) {
-        e.target.remove()
-        const currentScore = document.getElementById("current-score")
-        scoreArray = currentScore.innerHTML.split(" ")
-        scoreArray[1] = parseInt(scoreArray[1]) + 1
-        currentScore.innerHTML = scoreArray.join(" ")
-    })
-    gameBoard.appendChild(newCreeper)
-}
 
-function getRandomArbitrary(min, max) {
-    return Math.random() * (max - min) + min;
+    static getRandomPosition(min, max) {
+        return Math.random() * (max - min) + min;
+    }
 }
