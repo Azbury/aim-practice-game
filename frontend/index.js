@@ -34,7 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
     })
 })
 
+//Score Class
+//Contains all the function pertaining to the operating of the scoreboard, as well as adding new scores to the database after each game
 class Score {
+    //clearScoreboard method
+    //clears the scoreboard when a player clicks on the "new player" button
     static clearScoreboard() {
         for (let i = 1; i < 6; i++) {
             document.getElementById(`score-${i}`).innerHTML = `${i}. `
@@ -42,6 +46,8 @@ class Score {
         scores.style.display = "none"
     }
 
+    //getScores method
+    //gets the scores from the desired user based upon the parameter userID
     static getScores(userID) {
         fetch(`${USERS_URL}/${userID}`).then(function(reponse) {return reponse.json()}).then(function(user) {
             let userPoints = user.scores.map(element => element.points)
@@ -51,7 +57,9 @@ class Score {
             }
         })
     }
-
+    
+    //addNewScore method
+    //adds a new score the user in the database based upon the parameter user_id with the point total defined in the parameter points
     static addNewScore(points, user_id) {
         let formData = {
             "points": points,
@@ -72,6 +80,9 @@ class Score {
         })
     }
 
+    //resetGame method
+    //resets the current score, the counter that determines how many creepers will spawn, and removes the option to start a new game after
+    //the new game button has been pressed
     static resetGame() {
         document.getElementById("current-score").innerHTML = "Score: 0"
         startGame.style.display = "none"
@@ -79,7 +90,12 @@ class Score {
     }
 }
 
+//User Class
+//Contains all the functions pertaining to operating on Users including adding a new user to the database as well as clearing the current
+//user's information after the "new player" button is pressed
 class User {
+    //newUser method
+    //adds a new user to the database with the desired username entered by the user in the new user form
     static newUser(userData) {
         let formData = {
             "username": userData.username.value
@@ -113,6 +129,8 @@ class User {
         });
     }
 
+    //clearUserInfo method
+    //clears the current user's info when the "new player" button is pressed
     static clearUserInfo() {
         userFormContainer.style.display = "block"
         newPlayer.style.display = "none"
@@ -122,7 +140,11 @@ class User {
     }
 }
 
+//Creeper Class
+//Contains all the methods pertaining to adding a creeper to the game board when a user starts a new game
 class Creeper {
+    //addCreeper method
+    //add 1 creeper to the game board everytime the method is called
     static addCreeper() {
         const creeperElement = document.getElementById('creeper')
         if (creeperElement) {
@@ -145,7 +167,9 @@ class Creeper {
         })
         gameBoard.appendChild(newCreeper)
     }
-
+    
+    //getRandomPosition method
+    //gives a random position each time the method is called allowing for creepers to appear randomly on the game board
     static getRandomPosition(min, max) {
         return Math.random() * (max - min) + min;
     }
