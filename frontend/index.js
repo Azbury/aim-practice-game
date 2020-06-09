@@ -21,14 +21,15 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     startGame.addEventListener('click', function(e) {
         e.preventDefault()
+        myCreeper = new Creeper()
         Score.resetGame()
         let interval = setInterval(function() {
-            if (intervalCounter >= 20) {
+            if (intervalCounter >= 10) {
                 clearInterval(interval)
                 startGame.style.display = "block"
                 Score.addNewScore(parseInt(document.getElementById('current-score').innerHTML.split(" ")[1]), document.querySelector('.user').id)
             } else {
-                Creeper.addCreeper()
+                myCreeper.addCreeper()
             }
         }, 1000)
     })
@@ -50,20 +51,20 @@ class Score {
     //gets the scores from the desired user based upon the parameter userID
     static getScores(userID) {
         fetch(`${USERS_URL}/${userID}`).then(function(reponse) {return reponse.json()}).then(function(user) {
-            let userPoints = user.scores.map(element => element.points)
-            let sortedScores = userPoints.sort((a, b) => b - a)
-            for (let i = 1; i < sortedScores.length + 1 && i != 6; i++) {
-                document.getElementById(`score-${i}`).innerHTML = `${i}. ${sortedScores[i - 1]}`
+            user.scores.sort((a, b) => b.points - a.points)
+            const sortedScoresLength = user.scores.length
+            for (let i = 1; i < sortedScoresLength + 1 && i != 6; i++) {
+                document.getElementById(`score-${i}`).innerHTML = `${i}. ${user.scores[i - 1].points}`
             }
         })
     }
     
     //addNewScore method
     //adds a new score the user in the database based upon the parameter user_id with the point total defined in the parameter points
-    static addNewScore(points, user_id) {
+    static addNewScore(points, userId) {
         let formData = {
             "points": points,
-            "user_id": user_id
+            "user_id": userId
         }
     
         let configObj = {
@@ -145,7 +146,7 @@ class User {
 class Creeper {
     //addCreeper method
     //add 1 creeper to the game board everytime the method is called
-    static addCreeper() {
+    addCreeper() {
         const creeperElement = document.getElementById('creeper')
         if (creeperElement) {
             creeperElement.remove()
@@ -153,7 +154,7 @@ class Creeper {
         intervalCounter++
         let newCreeper = document.createElement('img')
         newCreeper.src = creeper
-        newCreeper.style = "width:50px;height:50px"
+        newCreeper.style = "width:50px;height:50px;"
         newCreeper.style.position = "absolute"
         newCreeper.style.top = `${Creeper.getRandomPosition(0,480)}px`
         newCreeper.style.left = `${Creeper.getRandomPosition(0,480)}px`
