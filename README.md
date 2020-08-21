@@ -5,7 +5,7 @@ This is a game built using JavaScript, HTML, CSS, with a Ruby on Rails API for t
 ## Installation
 
     $ git clone https://github.com/Azbury/aim-practice-game.git
-    $ cd home-remedy-website
+    $ cd aim-practice-game
     $ bundle install
 
 ## Usage
