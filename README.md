@@ -6,14 +6,14 @@ This is a game built using JavaScript, HTML, CSS, with a Ruby on Rails API for t
 
     $ git clone https://github.com/Azbury/aim-practice-game.git
     $ cd aim-practice-game
+    $ cd backend
+    $ cd aim-practice-game
     $ bundle install
 
 ## Usage
 
 Type the commands below and go to the link provided.
 
-    $ cd backend
-    $ cd aim-practice-game
     $ rake db:migrate
     $ rails s
 
